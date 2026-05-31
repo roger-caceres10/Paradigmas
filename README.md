@@ -1,7 +1,12 @@
-# ejercicio-alumno
+# Tp Chef - Haskell
 
 ## Integrantes
 
-- integrante1 (usuario github)
-- integrante2 (usuario github)
+- Roger Caceres 
+
+## Enunciado 
+
+<img src="foto1.jpeg" alt="Mi foto" width="340"/>
+<img src="foto2.jpeg" alt="Mi foto" width="340"/>
+
 ...
