@@ -69,4 +69,53 @@ noAptoHipertension = (>2) . gramosDeIngrediente "sal"
 
 -- Parte B 
 
+platoPepe :: Plato
+platoPepe = (8,[("carne",100), ("queso",20), ("papa",10),("cebolla",15), ("ajo",12), ("tomate",18)])
+
+trucosPepe :: [Truco]
+trucosPepe = [darSabor 2 5, simplificar, duplicarPorcion]
+
+pepeRonccino :: Participante
+pepeRonccino = ("Pepe Ronccino", trucosPepe, platoPepe)
+
+-- Parte C
+-- funciones auxiliares
+nombreParticipante :: Participante -> String
+nombreParticipante (nombre, _, _) = nombre
+
+trucos :: Participante -> [Truco]
+trucos (_, unosTrucos, _) = unosTrucos
+
+especialidad :: Participante -> Plato
+especialidad (_, _, unPlato) = unPlato
+
+aplicarTruco :: Plato -> Truco -> Plato
+aplicarTruco unPlato unTruco = unTruco unPlato
+
+-- cocinar
+cocinar :: Participante -> Plato
+cocinar unParticipante = foldl aplicarTruco (especialidad unParticipante) (trucos unParticipante)
+
+-- esMejorQue
+pesoTotal :: Plato -> Int
+pesoTotal = sum . map snd . ingredientes
+
+tieneMenorPeso :: Plato -> Plato -> Bool
+tieneMenorPeso unPlato otroPlato = pesoTotal unPlato < pesoTotal otroPlato
+
+tieneMayorDificultad :: Plato -> Plato -> Bool
+tieneMayorDificultad unPlato otroPlato = dificultad unPlato > dificultad otroPlato
+
+esMejorQue :: Plato -> Plato -> Bool
+esMejorQue unPlato otroPlato = tieneMayorDificultad unPlato otroPlato && tieneMenorPeso unPlato otroPlato
+
+-- ParticipanteEstrella 
+
+participanteEstrella :: [Participante] -> Participante
+participanteEstrella [unParticipante] = unParticipante
+participanteEstrella (unParticipante:otrosParticipantes)
+    | cocinar unParticipante `esMejorQue` cocinar (participanteEstrella otrosParticipantes) = unParticipante
+    | otherwise = participanteEstrella otrosParticipantes
+
+
 
